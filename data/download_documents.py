@@ -36,7 +36,7 @@ DOCUMENT_PATH = \
 
 # output paths
 DOC_OUTPUT_PATH = "raw/"
-KEY_FILE = "document_key.csv"
+KEY_FILE = "../cybersecurity_nlp/data_utils/document_key.csv"
 
 # value format
 LinkAnnotation = namedtuple("LinkAnnotation", ["country", "year"])
