@@ -83,7 +83,7 @@ def write_key(url_to_annotation):
     logging.info("Writing key...")
     with open(KEY_FILE, "w") as f:
         writer = csv.writer(f)
-        writer.writerow(["Country", "Year", "File", "Original URL"])
+        writer.writerow(["Country", "Year", "File", "OriginalURL"])
         for url, annotation in url_to_annotation.items():
             writer.writerow(
                 [annotation.country, annotation.year,

@@ -13,13 +13,13 @@ def convert_pdf_to_text(path):
     out = StringIO()
     laparams = LAParams()
     device = TextConverter(
-        resource_manager, out, codec='utf-8', laparams=laparams)
-    with open(path, 'rb') as fp:
+        resource_manager, out, codec="utf-8", laparams=laparams)
+    with open(path, "rb") as fp:
         interpreter = PDFPageInterpreter(resource_manager, device)
         for page in PDFPage.get_pages(
-                fp, set(), maxpages=0, password='', caching=True,
+                fp, set(), maxpages=0, password="", caching=True,
                 check_extractable=True):
-            interpreter.process_page(page)            
+            interpreter.process_page(page)
         text = out.getvalue()
 
     device.close()
