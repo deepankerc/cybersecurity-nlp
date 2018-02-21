@@ -39,5 +39,4 @@ class DocumentAccessor(object):
                 "text": convert_pdf_to_text(
                     os.path.join(self.doc_path, row.File))
             })
-            if i == 3: break
         return docs
