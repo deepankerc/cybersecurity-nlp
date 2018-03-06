@@ -35,7 +35,6 @@ class DocumentAccessor(object):
     def documents(self):
         docs = []
         for i, row in enumerate(self.rows):
-            if i == 2: break
             text_file = os.path.join(self.text_doc_path, row.File + ".txt")
             if os.path.isfile(text_file):
                 logger.info("Reading %s from text file", row.File)
