@@ -42,7 +42,7 @@ class DocumentAccessor(object):
             text_file = os.path.join(self.text_doc_path, row.File + ".txt")
             if os.path.isfile(text_file):
                 logger.info("Reading %s from text file", row.File)
-                with open(text_file, "rb") as f:
+                with open(text_file, "r") as f:
                     text = f.read()
             else:
                 logger.info("Converting %s to text", row.File)
