@@ -3,6 +3,7 @@
 from collections import namedtuple
 import csv
 import os
+from pdfminer.pdftypes import PDFException
 
 from cybersecurity_nlp.data.extract_text import convert_pdf_to_text
 from cybersecurity_nlp import logger
@@ -45,8 +46,15 @@ class DocumentAccessor(object):
                     text = f.read()
             else:
                 logger.info("Converting %s to text", row.File)
-                text = convert_pdf_to_text(
-                    os.path.join(self.raw_doc_path, row.File))
+                try:
+                    text = convert_pdf_to_text(
+                        os.path.join(self.raw_doc_path, row.File))
+                except TimeoutError:
+                    logger.warning("Timed out converting pdf %s" % row.File)
+                    continue
+                except PDFException:
+                    logger.warning("Error converting pdf %s" % row.File)
+                    continue
                 with open(text_file, "w") as f:
                     f.write(text)
             docs.append({

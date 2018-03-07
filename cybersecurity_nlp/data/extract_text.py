@@ -5,7 +5,9 @@ from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 from io import StringIO
+import timeout_decorator as td
 
+@td.timeout(15, timeout_exception=TimeoutError)
 def convert_pdf_to_text(path):
     """Converts pdf at path to string with text representation
     TODO: Retain page numbers"""
