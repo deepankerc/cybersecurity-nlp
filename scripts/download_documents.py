@@ -29,7 +29,7 @@ DOCUMENT_PATH = \
     "/en/ITU-D/Cybersecurity/Documents/National_Strategies_Repository/"
 
 # value format
-LinkAnnotation = namedtuple("LinkAnnotation", ["country", "year"])
+LinkAnnotation = namedtuple("LinkAnnotation", ["country", "year", "language"])
 
 
 def filename_from_url(url):
@@ -50,7 +50,7 @@ def find_docs():
             full_url = urljoin(BASE_URL, href)
             if full_url not in url_to_annotation:
                 url_to_annotation[full_url] = LinkAnnotation(
-                    country_guess, year_guess)
+                    country_guess, year_guess, "EN")
     return url_to_annotation
 
 
@@ -60,24 +60,28 @@ def validate_guesses(url_to_annotation):
         print("Document Name:\n", filename_from_url(k))
         user_country = input("Validate country (%s)? " % annotation.country)
         user_year = input("Validate year (%s)? " % annotation.year)
+        user_language = input("Language (%s)? " % annotation.language)
         print("\n")
-        country, year = annotation.country, annotation.year
+        country, year, language = (annotation.country, annotation.year,
+            annotation.language)
         if user_country != "":
             country = user_country
         if user_year != "":
             year = user_year
-        url_to_annotation[k] = LinkAnnotation(country, year)
+        if user_language != "":
+            language = user_language
+        url_to_annotation[k] = LinkAnnotation(country, year, language)
 
 
 def write_key(url_to_annotation, key_file):
     logging.info("Writing key...")
     with open(key_file, "w") as f:
         writer = csv.writer(f)
-        writer.writerow(["Country", "Year", "File", "OriginalURL"])
+        writer.writerow(["Country", "Year", "File", "OriginalURL", "Language"])
         for url, annotation in url_to_annotation.items():
             writer.writerow(
                 [annotation.country, annotation.year,
-                 filename_from_url(url), url])
+                 filename_from_url(url), url, annotation.language])
 
 
 def download_docs(urls, doc_path):

@@ -35,6 +35,9 @@ class DocumentAccessor(object):
     def documents(self):
         docs = []
         for i, row in enumerate(self.rows):
+            # No language support, so skip non-english documents
+            if row.Language != "EN":
+                continue
             text_file = os.path.join(self.text_doc_path, row.File + ".txt")
             if os.path.isfile(text_file):
                 logger.info("Reading %s from text file", row.File)
