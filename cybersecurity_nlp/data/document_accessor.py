@@ -33,7 +33,7 @@ class DocumentAccessor(object):
         logger.info("%d documents found in key file", len(rows))
         self.rows = rows
 
-    def documents(self):
+    def documents(self, from_file_only=False):
         docs = []
         for i, row in enumerate(self.rows):
             # No language support, so skip non-english documents
@@ -44,7 +44,7 @@ class DocumentAccessor(object):
                 logger.info("Reading %s from text file", row.File)
                 with open(text_file, "r") as f:
                     text = f.read()
-            else:
+            elif not from_file_only:
                 logger.info("Converting %s to text", row.File)
                 try:
                     text = convert_pdf_to_text(
@@ -57,6 +57,8 @@ class DocumentAccessor(object):
                     continue
                 with open(text_file, "w") as f:
                     f.write(text)
+            else:
+                logger.warning("Skipping pdf %s" % row.File)
             docs.append({
                 "id": i,
                 "country": row.Country,
