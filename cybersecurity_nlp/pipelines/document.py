@@ -4,23 +4,27 @@ class Document:
 
     def __init__(self, raw):
         self.id_= raw["id"]
-        self.year = raw["year"]
-        self.country = raw["country"]
-        self.original_url = raw["original_url"]
-        self.raw = raw["text"]
+        self._year = raw["year"]
+        self._country = raw["country"]
+        self._original_url = raw["original_url"]
+        self._raw = raw["text"]
 
+    @property
     def country(self):
-        return self.country
+        return self._country
 
-    def raw_text(self):
-        return self.raw
+    @property
+    def raw(self):
+        return self._raw
 
     def text(self):
-        text = clean_text(self.raw_text())
+        text = clean_text(self.raw)
         return text
 
+    @property
     def url(self):
-        return self.original_url
+        return self._original_url
 
+    @property
     def year(self):
-        return self.year
+        return self._year

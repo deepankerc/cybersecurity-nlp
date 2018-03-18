@@ -8,7 +8,8 @@ class Corpus(object):
         docs = []
         for doc in raw_docs:
             docs.append(Document(doc))
-        self.docs = docs
+        self._docs = docs
 
+    @property
     def documents(self):
-        return self.docs
+        return self._docs
