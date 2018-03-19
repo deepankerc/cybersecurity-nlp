@@ -1,6 +1,10 @@
 import re
 
 def clean_text(text):
+    """
+    Normalizes unicode characters and makes other safe cleaning improvements
+    """
+
     # spacing
     text = re.sub("\xa0", " ", text)
 
@@ -19,3 +23,33 @@ def clean_text(text):
     text = re.sub("(?<=[a-z\-,]) ?\n(?=[\(a-zA-Z1-9])", " ", text)
 
     return text
+
+
+def clean_sentence(text):
+    """
+    Fixes spacing within a sentence
+    """
+
+    # strip leading/trailing whitespace
+    text = text.strip()
+
+    # replace new lines with spaces
+    text = re.sub("\n", " ", text)
+
+    # replace multiple spaces with single space
+    text = re.sub("\s{2,}", " ", text)
+
+    return text
+
+
+def is_bad_sentence(text):
+    """
+    Decides if a sentence is bad (headers, too short, incomplete, etc)
+    """
+    if len(text) < 20:
+        return True
+
+    if float(len(re.findall("[a-zA-Z ]", text))) / len(text) < .8:
+        return True
+
+    return False
