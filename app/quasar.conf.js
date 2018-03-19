@@ -38,6 +38,10 @@ module.exports = function (ctx) {
     // framework: 'all' --- includes everything; for dev only!
     framework: {
       components: [
+        'QCard',
+        'QCardTitle',
+        'QCardMain',
+        'QCardSeparator',
         'QLayout',
         'QLayoutHeader',
         'QLayoutDrawer',
@@ -47,11 +51,14 @@ module.exports = function (ctx) {
         'QToolbarTitle',
         'QBtn',
         'QIcon',
+        'QInfiniteScroll',
         'QList',
         'QListHeader',
         'QItem',
         'QItemMain',
-        'QItemSide'
+        'QItemSide',
+        'QSearch',
+        'QSpinnerDots'
       ],
       directives: [
         'Ripple'

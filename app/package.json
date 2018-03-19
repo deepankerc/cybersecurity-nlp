@@ -9,7 +9,9 @@
   "scripts": {
     "test": "echo \"No test specified\" && exit 0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "js-search": "^1.4.2"
+  },
   "devDependencies": {
     "quasar-cli": "^0.15.11"
   },
