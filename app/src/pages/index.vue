@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <q-page padding>
     <q-search v-model="searchTerm" v-on:input="filter" />
     <q-infinite-scroll :handler="loadMore">
-      <q-card v-for="(elem, index) in sentences" :key="index">
+      <q-card class="q-ma-sm" v-for="(elem, index) in sentences" :key="index">
         <q-card-title>
           {{ elem.country }}
         </q-card-title>
@@ -17,7 +17,7 @@
       -->
       <q-spinner-dots slot="message" :size="40"></q-spinner-dots>
     </q-infinite-scroll>
-  </div>
+  </q-page>
 </template>
 
 <style>
