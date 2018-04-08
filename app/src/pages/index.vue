@@ -1,6 +1,10 @@
 <template>
   <q-page padding>
-    <q-search v-model="searchTerm" v-on:input="filter" />
+    <q-search v-model="searchTerm" v-on:input="filter">
+      <q-autocomplete
+        :static-data="{field: 'value', list: phrases}"
+      />
+    </q-search>
     <q-infinite-scroll :handler="loadMore">
       <q-card class="q-ma-sm" v-for="(elem, index) in sentences" :key="index">
         <q-card-title>
@@ -11,10 +15,6 @@
           {{ elem.text }}
         </q-card-main>
       </q-card>
-      <!--
-        slot="message" for DOM element to display (in this example
-        a dots spinner) when loading additional content
-      -->
       <q-spinner-dots slot="message" :size="40"></q-spinner-dots>
     </q-infinite-scroll>
   </q-page>
@@ -24,7 +24,8 @@
 </style>
 
 <script>
-import TestData from "../assets/test_data.json";
+import TestData from "assets/test_data.json";
+import phrases from "assets/phrases.json";
 import * as JsSearch from 'js-search';
 
 const pageSize = 10;
@@ -34,13 +35,25 @@ var search = new JsSearch.Search('text');
 search.addIndex('text');
 search.addDocuments(TestData);
 
+// Top phrases for Autocomplete
+function parsePhrases() {
+  return phrases.map(phrase => {
+    return {
+      label: phrase,
+      value: phrase
+    }
+  })
+}
+
+
 export default {
   name: 'PageIndex',
   data() {
     return {
       testData: TestData,
       sentences: TestData.slice(0, 10),
-      searchTerm: null
+      searchTerm: null,
+      phrases: parsePhrases()
     }
   },
   methods: {
