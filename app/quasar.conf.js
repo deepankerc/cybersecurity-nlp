@@ -23,7 +23,7 @@ module.exports = function (ctx) {
     build: {
       scopeHoisting: true,
       vueRouterMode: 'history',
-      publicPath: 'cybersecurity-nlp/',
+      publicPath: 'https://llefebure.github.io/cybersecurity-nlp/',
       // gzip: true,
       // analyze: true,
       // extractCSS: false,
