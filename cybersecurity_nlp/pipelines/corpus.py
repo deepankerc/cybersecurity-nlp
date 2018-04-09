@@ -4,8 +4,8 @@ from cybersecurity_nlp.utils.tokenization import SentenceTokenizer
 
 class Corpus(object):
 
-    def __init__(self):
-        raw_docs = DocumentAccessor().documents(from_file_only=True)
+    def __init__(self, from_file_only=True):
+        raw_docs = DocumentAccessor().documents(from_file_only=from_file_only)
         docs = []
         for doc in raw_docs:
             docs.append(Document(doc, self))

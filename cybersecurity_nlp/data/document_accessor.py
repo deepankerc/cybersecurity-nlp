@@ -39,6 +39,7 @@ class DocumentAccessor(object):
             # No language support, so skip non-english documents
             if row.Language != "EN":
                 continue
+            text = None
             text_file = os.path.join(self.text_doc_path, row.File + ".txt")
             if os.path.isfile(text_file):
                 logger.info("Reading %s from text file", row.File)
@@ -59,11 +60,12 @@ class DocumentAccessor(object):
                     f.write(text)
             else:
                 logger.warning("Skipping pdf %s" % row.File)
-            docs.append({
-                "id": i,
-                "country": row.Country,
-                "year": row.Year,
-                "original_url": row.OriginalURL,
-                "text": text
-            })
+            if text is not None:
+                docs.append({
+                    "id": i,
+                    "country": row.Country,
+                    "year": row.Year,
+                    "original_url": row.OriginalURL,
+                    "text": text
+                })
         return docs
