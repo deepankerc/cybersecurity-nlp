@@ -13,7 +13,7 @@
         <q-card-separator />
         <q-card-main>
           {{ elem.text }}
-          <a :href=idToURL[elem.doc_id] style="text-decoration: none;"><q-icon name="launch" /></a>
+          <a :href=idToURL[elem.doc_id] target="_blank" style="text-decoration: none;"><q-icon name="launch" /></a>
         </q-card-main>
         <q-card-separator />
       </q-card>
