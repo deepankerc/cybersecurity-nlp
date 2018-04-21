@@ -12,10 +12,8 @@ class Corpus(object):
         self._docs = docs
         self._sentence_tokenizer = SentenceTokenizer()
 
-    @property
     def documents(self):
         return self._docs
 
-    @property
     def sentence_tokenizer(self):
         return self._sentence_tokenizer

@@ -16,10 +16,8 @@ class Sentence(object):
     def is_bad(self):
         return is_bad_sentence(self.text())
 
-    @property
     def url(self):
         return self._original_url
 
-    @property
     def year(self):
         return self._year

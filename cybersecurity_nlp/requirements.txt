@@ -1,3 +1,6 @@
 pdfminer.six
 nltk
 timeout-decorator
+bs4
+requests
+tqdm

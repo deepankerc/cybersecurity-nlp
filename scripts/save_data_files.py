@@ -11,17 +11,17 @@ def save_data_files():
     sentence_data = []
     doc_data = []
     corpus = Corpus()
-    for doc in corpus.documents:
+    for doc in corpus.documents():
         doc_data.append({
-            'id': doc.id,
-            'url': doc.url,
-            'country': doc.country
+            'id': doc.id(),
+            'url': doc.url(),
+            'country': doc.country()
         })
         for sent in doc.sentences():
             if not sent.is_bad():
                 sentence_data.append({
                     'text': sent.text(),
-                    'doc_id': doc.id
+                    'doc_id': doc.id()
                 })
     with open('app/src/assets/sentence_data.json', 'w') as f:
         f.write(json.dumps(sentence_data))

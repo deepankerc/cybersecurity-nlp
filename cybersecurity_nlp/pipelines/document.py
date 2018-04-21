@@ -11,19 +11,15 @@ class Document(object):
         self._raw = raw["text"]
         self._corpus = corpus
 
-    @property
     def corpus(self):
         return self._corpus
 
-    @property
     def country(self):
         return self._country
 
-    @property
     def id(self):
         return self._id
 
-    @property
     def raw(self):
         return self._raw
 
@@ -31,11 +27,9 @@ class Document(object):
         text = clean_text(self.raw)
         return text
 
-    @property
     def url(self):
         return self._original_url
 
-    @property
     def year(self):
         return self._year
 
