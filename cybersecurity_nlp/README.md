@@ -1,4 +1,7 @@
 # Text Processing
 
-## Text Extraction
-
+Components of processing pipeline:
+* Text extraction from PDFs
+* Text cleaning
+* Sentence tokenization
+* Sentence filtering
