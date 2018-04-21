@@ -12,6 +12,22 @@ The relevant documents to be analyzed are [here](https://www.itu.int/en/ITU-D/Cy
 
 ## Getting Started
 
+### Setup
+
+This project requires Python 3+. For quick and easy setup, make sure you have Python 3+ and use a `virtualenv`. Setup will look something like this:
+```
+python3 -m virtualenv cybersecurity
+source cybersecurity/bin/activate
+# cd back to the project root if you're not there already
+pip install -r cybersecurity_nlp/requirements.txt
+```
+
+For the frontend, you'll need `npm` and Quasar which relies on Vue.js. After installing `npm`, this should be as simple as:
+```
+npm install -g vue-cli
+npm install -g quasar-cli
+```
+
 ### Downloading Documents
 
 Metadata on all of the appropriate documents is provided in the CSV [here](https://github.com/llefebure/cybersecurity-nlp/blob/master/cybersecurity_nlp/data/document_key.csv). To fetch the documents according to this metadata, simply run the command below:
@@ -20,11 +36,11 @@ Metadata on all of the appropriate documents is provided in the CSV [here](https
 ./download_documents.sh
 ```
 
-If you find an error in the metadata, feel free to edit the CSV directly. If you'd like to completely annotate the documents yourself, simply delete that CSV before running the above command. The script will prompt you to validate the metadata associated with each document and create the CSV for you.
+If you find an error in the metadata, feel free to edit the CSV directly. If you'd like to completely annotate the documents yourself, simply delete that CSV before running the above command. The script will scrape the page that hosts the documents and prompt you to validate the scraped metadata associated with each document. This will create the necessary CSV for you.
 
 ### Text Processing
 
-Text extraction, tokenization, annotation, and all other backend processing tasks are done in Python and documented [here](https://github.com/llefebure/cybersecurity-nlp/blob/master/cybersecurity_nlp/README.md). A static JSON file is produced and served by the frontend.
+Text extraction, tokenization, annotation, and all other backend processing tasks are done in Python and documented [here](https://github.com/llefebure/cybersecurity-nlp/blob/master/cybersecurity_nlp/README.md). These tasks run offline and produce static JSON files that power the app. Running the script [here](https://github.com/llefebure/cybersecurity-nlp/blob/master/cybersecurity_nlp/scripts/save_data_files.py) generates these files.
 
 ### Web App
 

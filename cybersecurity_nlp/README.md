@@ -1,3 +1,4 @@
 # Text Processing
 
-> WIP
+## Text Extraction
+
