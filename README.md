@@ -40,7 +40,7 @@ If you find an error in the metadata, feel free to edit the CSV directly. If you
 
 ### Text Processing
 
-Text extraction, tokenization, annotation, and all other backend processing tasks are done in Python and documented [here](https://github.com/llefebure/cybersecurity-nlp/blob/master/cybersecurity_nlp/README.md). These tasks run offline and produce static JSON files that power the app. Running the script [here](https://github.com/llefebure/cybersecurity-nlp/blob/master/cybersecurity_nlp/scripts/save_data_files.py) generates these files.
+Text extraction, tokenization, annotation, and all other backend processing tasks are done in Python and documented [here](https://github.com/llefebure/cybersecurity-nlp/blob/master/cybersecurity_nlp/README.md). These tasks run offline and produce static JSON files that power the app. Running the script [here](https://github.com/llefebure/cybersecurity-nlp/blob/master/scripts/save_data_files.py) generates these files.
 
 ### Web App
 
