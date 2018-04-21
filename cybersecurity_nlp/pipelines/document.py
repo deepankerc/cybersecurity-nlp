@@ -24,7 +24,7 @@ class Document(object):
         return self._raw
 
     def text(self):
-        text = clean_text(self.raw)
+        text = clean_text(self.raw())
         return text
 
     def url(self):
@@ -35,7 +35,8 @@ class Document(object):
 
     def sentences(self):
         sentences = []
-        raw_sentences = self.corpus.sentence_tokenizer.tokenize(self.text())
+        raw_sentences = (self.corpus().sentence_tokenizer()
+                            .tokenize(self.text()))
         for i, sent in enumerate(raw_sentences):
-            sentences.append(Sentence(i, 0, self.id, sent))
+            sentences.append(Sentence(i, 0, self.id(), sent))
         return sentences
