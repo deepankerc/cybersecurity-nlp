@@ -24,7 +24,8 @@ def save_data_files():
                 'text': sent.text(),
                 'id': sent.id(),
                 'paragraph_id': sent.paragraph_id(),
-                'doc_id': doc.id()
+                'doc_id': doc.id(),
+                'indent': sent.requires_indentation()
             })
 
     # could do a meaningful sort here

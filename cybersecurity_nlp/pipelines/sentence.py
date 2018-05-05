@@ -1,3 +1,5 @@
+import re
+
 from cybersecurity_nlp.utils.text_cleaning import (clean_sentence,
     is_bad_sentence)
 
@@ -22,7 +24,7 @@ class Sentence(object):
         return is_bad_sentence(self.text())
 
     def assign_paragraph(self, idx):
-        '''Sentence ID is of the form {{ doc id }}_{{ sentence index}}'''
+        '''Paragraph ID is of the form {{ doc id }}_{{ paragraph index }}'''
         self._paragraph_idx = idx
         self._paragraph_id = self._doc_id + "_" + str(idx)
 
@@ -34,3 +36,17 @@ class Sentence(object):
 
     def year(self):
         return self._year
+
+    def requires_indentation(self):
+        '''Indicates whether a new line is necessary when displaying the
+        sentence in the context of a paragraph
+
+        Sentences starting with things like '(1)', 'a)', or bullets should
+        be indented to improve readability.
+        '''
+        bullets = set(['\u2022', '\u2023', '\u25e6', '\u2043', '\u2219'])
+        if re.match(r'\(?[a-zA-Z0-9][\)|\.]', self.text()) or \
+                self.text()[0] in bullets:
+            return True
+        else:
+            return False

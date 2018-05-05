@@ -9,7 +9,7 @@
       <q-modal-layout>
         <q-toolbar slot="header">
           <q-toolbar-title v-if="modalElem !== null">
-            {{ idToCountry[modalElem.doc_id] }} <a :href="idToURL[modalElem.doc_id]" target="_blank" style="text-decoration: none;"><q-icon name="launch" /></a>
+            {{ idToCountry[modalElem.doc_id] }} ({{ idToYear[modalElem.doc_id] }}) <a :href="idToURL[modalElem.doc_id]" target="_blank" style="text-decoration: none;"><q-icon name="launch" /></a>
           </q-toolbar-title>
         </q-toolbar>
 
@@ -18,6 +18,7 @@
             color="primary"
             v-close-overlay
             label="Close"
+            class="absolute-right"
           />
         </q-toolbar>
 
@@ -29,7 +30,7 @@
     <q-infinite-scroll :handler="loadMore">
       <q-card class="q-ma-sm" v-for="(elem, index) in sentences" :key="index">
         <q-card-title>
-          {{ idToCountry[elem.doc_id] }}
+          {{ idToCountry[elem.doc_id] }} ({{ idToYear[elem.doc_id] }})
         </q-card-title>
         <q-card-separator />
         <q-card-main>
@@ -59,12 +60,16 @@ search.addDocuments(SentenceData);
 
 // Get URL and country mappings for doc ids
 var idToURL = DocData.reduce(function(map, obj) {
-    map[obj.id] = obj.url;
-    return map;
+  map[obj.id] = obj.url;
+  return map;
 }, {});
 var idToCountry = DocData.reduce(function(map, obj) {
-    map[obj.id] = obj.country;
-    return map;
+  map[obj.id] = obj.country;
+  return map;
+}, {});
+var idToYear = DocData.reduce(function(map, obj) {
+  map[obj.id] = obj.year;
+  return map;
 }, {});
 
 // Top phrases for Autocomplete
@@ -85,6 +90,7 @@ export default {
       sentenceData: SentenceData,
       idToCountry: idToCountry,
       idToURL: idToURL,
+      idToYear: idToYear,
       sentences: SentenceData.slice(0, 10),
       searchTerm: null,
       phrases: parsePhrases(),
@@ -112,16 +118,29 @@ export default {
     },
     openModal(elem) {
       var modalSentences = SentenceData.filter(
-        x => x.paragraph_id === elem.paragraph_id);
+        x => x.paragraph_id === elem.paragraph_id).sort(
+          function(a, b) {
+            return a.id.split('_')[1] - b.id.split('_')[1];
+          }
+        );
       var modalSentencesText = Array(modalSentences.length);
       for (var i = 0; i < modalSentences.length; i++) {
-        if (modalSentences[i].id == elem.id) {
-          modalSentencesText[i] = '<strong>' + modalSentences[i].text + '</strong>';
-        } else {
-          modalSentencesText[i] = modalSentences[i].text;
+        modalSentencesText[i] = '';
+        
+        // Add indent for lists
+        if (modalSentences[i].indent && i != 0) {
+          modalSentencesText[i] += '<br><br>';
         }
+
+        // Bold the original clicked sentence
+        if (modalSentences[i].id == elem.id) {
+          modalSentencesText[i] += '<strong>' + modalSentences[i].text + '</strong>';
+        } else {
+          modalSentencesText[i] += modalSentences[i].text;
+        }
+
       }
-      this.modalText = modalSentencesText.join(' ');
+      this.modalText = '<p>' + modalSentencesText.join(' ') + '</p>';
       this.modalElem = elem;
       this.modalOpen = true;
     }
