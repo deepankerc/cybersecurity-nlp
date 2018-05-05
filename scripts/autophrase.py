@@ -31,8 +31,7 @@ def train():
     c = Corpus()
     for doc in c.documents():
         for sentence in doc.sentences():
-            if not sentence.is_bad():
-                print(json.dumps(sentence.text()))
+            print(json.dumps(sentence.text()))
 
 
 def test(file_path):

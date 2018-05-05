@@ -18,7 +18,7 @@ class Document(object):
         return self._country
 
     def id(self):
-        return self._id
+        return str(self._id)
 
     def raw(self):
         return self._raw
@@ -33,10 +33,18 @@ class Document(object):
     def year(self):
         return self._year
 
-    def sentences(self):
+    def sentences(self, remove_bad=True):
         sentences = []
         raw_sentences = (self.corpus().sentence_tokenizer()
                             .tokenize(self.text()))
+        # define paragraphs as runs of clean sentences
+        paragraph_idx = 0
         for i, sent in enumerate(raw_sentences):
-            sentences.append(Sentence(i, 0, self.id(), sent))
+            s = Sentence(i, self.id(), sent)
+            if s.is_bad():
+                paragraph_idx += 1
+            else:
+                s.assign_paragraph(paragraph_idx)
+            if not remove_bad or not s.is_bad():
+                sentences.append(s)
         return sentences

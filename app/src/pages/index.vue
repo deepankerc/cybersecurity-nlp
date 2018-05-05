@@ -5,6 +5,27 @@
         :static-data="{field: 'value', list: phrases}"
       />
     </q-search>
+    <q-modal v-model="modalOpen" :content-css="{minWidth: '80vw', minHeight: '80vh'}">
+      <q-modal-layout>
+        <q-toolbar slot="header">
+          <q-toolbar-title v-if="modalElem !== null">
+            {{ idToCountry[modalElem.doc_id] }} <a :href="idToURL[modalElem.doc_id]" target="_blank" style="text-decoration: none;"><q-icon name="launch" /></a>
+          </q-toolbar-title>
+        </q-toolbar>
+
+        <q-toolbar slot="footer">
+          <q-btn
+            color="primary"
+            v-close-overlay
+            label="Close"
+          />
+        </q-toolbar>
+
+        <div class="layout-padding">
+          <span v-html="modalText"></span>
+        </div>
+      </q-modal-layout>
+    </q-modal>
     <q-infinite-scroll :handler="loadMore">
       <q-card class="q-ma-sm" v-for="(elem, index) in sentences" :key="index">
         <q-card-title>
@@ -12,10 +33,8 @@
         </q-card-title>
         <q-card-separator />
         <q-card-main>
-          {{ elem.text }}
-          <a :href=idToURL[elem.doc_id] target="_blank" style="text-decoration: none;"><q-icon name="launch" /></a>
+          {{ elem.text }} <q-icon name="launch" @click.native="openModal(elem)" />
         </q-card-main>
-        <q-card-separator />
       </q-card>
       <q-spinner-dots slot="message" :size="40"></q-spinner-dots>
     </q-infinite-scroll>
@@ -68,12 +87,15 @@ export default {
       idToURL: idToURL,
       sentences: SentenceData.slice(0, 10),
       searchTerm: null,
-      phrases: parsePhrases()
+      phrases: parsePhrases(),
+      modalText: null,
+      modalElem: null,
+      modalOpen: false
     }
   },
   methods: {
     loadMore(index, done) {
-      var newStart = index * pageSize;
+      var newStart = this.sentences.length;
       var newEnd = newStart + pageSize;
       var newSentences = this.sentenceData.slice(newStart, newEnd);
       this.sentences = this.sentences.concat(newSentences);
@@ -87,6 +109,21 @@ export default {
         this.sentenceData = search.search(newVal);
       }
       this.sentences = this.sentenceData.slice(0, pageSize);
+    },
+    openModal(elem) {
+      var modalSentences = SentenceData.filter(
+        x => x.paragraph_id === elem.paragraph_id);
+      var modalSentencesText = Array(modalSentences.length);
+      for (var i = 0; i < modalSentences.length; i++) {
+        if (modalSentences[i].id == elem.id) {
+          modalSentencesText[i] = '<strong>' + modalSentences[i].text + '</strong>';
+        } else {
+          modalSentencesText[i] = modalSentences[i].text;
+        }
+      }
+      this.modalText = modalSentencesText.join(' ');
+      this.modalElem = elem;
+      this.modalOpen = true;
     }
   }
 }

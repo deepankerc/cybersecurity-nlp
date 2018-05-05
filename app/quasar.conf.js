@@ -44,9 +44,12 @@ module.exports = function (ctx) {
         'QCardTitle',
         'QCardMain',
         'QCardSeparator',
+        'QCardActions',
         'QLayout',
         'QLayoutHeader',
         'QLayoutDrawer',
+        'QModal',
+        'QModalLayout',
         'QPageContainer',
         'QPage',
         'QToolbar',
@@ -63,7 +66,8 @@ module.exports = function (ctx) {
         'QSpinnerDots'
       ],
       directives: [
-        'Ripple'
+        'Ripple',
+        'CloseOverlay'
       ],
       // Quasar plugins
       plugins: [

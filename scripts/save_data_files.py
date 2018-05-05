@@ -2,6 +2,7 @@
 
 import json
 import os
+import random
 import sys
 
 sys.path.append(os.getcwd()) # probably better to just pip install
@@ -15,14 +16,20 @@ def save_data_files():
         doc_data.append({
             'id': doc.id(),
             'url': doc.url(),
-            'country': doc.country()
+            'country': doc.country(),
+            'year': doc.year()
         })
         for sent in doc.sentences():
-            if not sent.is_bad():
-                sentence_data.append({
-                    'text': sent.text(),
-                    'doc_id': doc.id()
-                })
+            sentence_data.append({
+                'text': sent.text(),
+                'id': sent.id(),
+                'paragraph_id': sent.paragraph_id(),
+                'doc_id': doc.id()
+            })
+
+    # could do a meaningful sort here
+    sentence_data = sorted(sentence_data, key=lambda x: random.uniform(0, 1))
+
     with open('app/src/assets/sentence_data.json', 'w') as f:
         f.write(json.dumps(sentence_data))
     with open('app/src/assets/doc_data.json', 'w') as f:
