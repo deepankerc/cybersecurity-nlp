@@ -1,16 +1,28 @@
 # Cybersecurity Strategy Analysis
 
-This is an independently developed application to be submitted to the UN's Unite Ideas [CyberSecurityNLP initiative](https://cybersecuritynlp.uniteideas.spigit.com/Page/Home). The initiative is a collaborative project of [Unite Ideas](https://www.uniteideas.spigit.com/Page/Home), the Digital Blue Helmets, Fordham University, and Northeastern University.
+This is an independently developed application submitted to the UN's Unite Ideas [CyberSecurityNLP initiative](https://cybersecuritynlp.uniteideas.spigit.com/Page/Home). The initiative is a collaborative project of [Unite Ideas](https://www.uniteideas.spigit.com/Page/Home), the Digital Blue Helmets, Fordham University, and Northeastern University.
 
 ## Overview
 
-The goal of this project is to build a tool that expedites the review of national cybersecurity strategy documents. From the [project website](https://www.uniteideas.spigit.com/Page/Home):
+The goal of this project was to build a tool that expedites the review of national cybersecurity strategy documents. From the [project website](https://www.uniteideas.spigit.com/Page/Home):
 
 > Analyzing strategy documents is a difficult task which requires human knowledge held by specialists in public policymaking, cybersecurity, legal, human resources, and other domains. It also involves lengthy manual reviewing and highlighting of documents in different formats. Let's expedite this effort.
 
 The relevant documents to be analyzed are [here](https://www.itu.int/en/ITU-D/Cybersecurity/Pages/National-Strategies-repository.aspx) and examples of human analyst summaries are [here](https://www.itu.int/en/ITU-D/Cybersecurity/Pages/Country_Profiles.aspx). The documents are unstructured PDFs with varying formats.
 
-## Getting Started
+In analysis tools such as this, I think it is important to provide the user sufficient context to understand the information displayed, and this philsophy drives the design of the application. For example, the app displays sentences, the paragraphs they came from, and direct links to the original documents.
+
+## Using the App
+
+The app is hosted [here](https://llefebure.github.io/cybersecurity-nlp/). Direct links to the original documents are located along the left hand panel, while cards displaying all the sentences are in the main panel. The sentences are searchable, and common phrases are displayed as autocomplete suggestions in the search box. The animation below shows a simple workflow in the app.
+
+![Usage Example](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+
+## Getting Started for Development
+
+### Overview
+
+This project is designed to be modular and extensible. It is structured as follows. The text processing is done in the python package directory `./cybersecurity_nlp/` and the frontend application is in the `./app/` directory. The app runs on static JSON files produced by a script in the `./scripts/` directory.
 
 ### Setup
 
