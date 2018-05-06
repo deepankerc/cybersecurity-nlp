@@ -16,7 +16,7 @@ In analysis tools such as this, I think it is important to provide the user suff
 
 The app is hosted [here](https://llefebure.github.io/cybersecurity-nlp/). Direct links to the original documents are located along the left hand panel, while cards displaying all the sentences are in the main panel. The sentences are searchable, and common phrases are displayed as autocomplete suggestions in the search box. The animation below shows a simple workflow in the app.
 
-![Usage Example](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+![Usage Example](https://github.com/llefebure/cybersecurity-nlp/blob/master/screencast/screencast.gif)
 
 ## Getting Started for Development
 
