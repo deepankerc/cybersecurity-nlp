@@ -1,10 +1,22 @@
 <template>
   <q-page padding>
-    <q-search v-model="searchTerm" v-on:input="filter">
-      <q-autocomplete
-        :static-data="{field: 'value', list: phrases}"
+    <div>
+      <q-search v-model="searchTerm" v-on:input="filterOnSearch" placeholder="Search for a topic or keyphrase">
+        <q-autocomplete
+          :static-data="{field: 'value', list: phrases}"
+        />
+      </q-search>
+    </div>
+    <div>
+      <q-select
+        multiple
+        float-label="Select Countries"
+        v-model="selectedCountries"
+        :options="countryOptions"
+        :filter=true
+        @input="filterOnCountrySelect"
       />
-    </q-search>
+    </div>
     <q-modal v-model="modalOpen" :content-css="{minWidth: '80vw', minHeight: '80vh'}">
       <q-modal-layout>
         <q-toolbar slot="header">
@@ -72,6 +84,22 @@ var idToYear = DocData.reduce(function(map, obj) {
   return map;
 }, {});
 
+// Get unique countries
+function uniqueCountries(d) {
+  var uniq = d.reduce(function(map, obj) {
+    map[obj.country] = true;
+    return map;
+  }, {});
+  uniq = Object.keys(uniq);
+  uniq.sort();
+  return uniq.map(function(x) {
+    return {
+      label: x,
+      value: x
+    };
+  });
+}
+
 // Top phrases for Autocomplete
 function parsePhrases() {
   return phrases.map(phrase => {
@@ -81,7 +109,6 @@ function parsePhrases() {
     }
   })
 }
-
 
 export default {
   name: 'PageIndex',
@@ -96,7 +123,9 @@ export default {
       phrases: parsePhrases(),
       modalText: null,
       modalElem: null,
-      modalOpen: false
+      modalOpen: false,
+      countryOptions: uniqueCountries(DocData),
+      selectedCountries: [],
     }
   },
   methods: {
@@ -107,14 +136,21 @@ export default {
       this.sentences = this.sentences.concat(newSentences);
       done();
     },
-    filter(newVal) {
+    filterOnSearch(newVal) {
       if (newVal == "") {
         this.sentenceData = SentenceData;
       }
       else {
         this.sentenceData = search.search(newVal);
       }
+      if (this.selectedCountries.length > 0) {
+        this.sentenceData = this.sentenceData.filter(
+        sentence => this.selectedCountries.includes(this.idToCountry[sentence.doc_id]));
+      }
       this.sentences = this.sentenceData.slice(0, pageSize);
+    },
+    filterOnCountrySelect(newVal) {
+      this.filterOnSearch(this.searchTerm == null ? '' : this.searchTerm);
     },
     openModal(elem) {
       var modalSentences = SentenceData.filter(
