@@ -46,10 +46,13 @@ def is_bad_sentence(text):
     """
     Decides if a sentence is bad (headers, too short, incomplete, etc)
     """
-    if len(text) < 20 or len(text) > 250:
+    if len(text) < 20 or len(text) > 350:
         return True
 
     if float(len(re.findall("[a-zA-Z ]", text))) / len(text) < .85:
+        return True
+
+    if float(len(re.findall("[A-Z]", text))) / len(text) > .5:
         return True
 
     return False

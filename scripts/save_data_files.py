@@ -1,8 +1,6 @@
 # This script generates the data files rendered by the application.
-
 import json
 import os
-import random
 import sys
 
 sys.path.append(os.getcwd()) # probably better to just pip install
@@ -28,8 +26,9 @@ def save_data_files():
                 'indent': sent.requires_indentation()
             })
 
-    # could do a meaningful sort here
-    sentence_data = sorted(sentence_data, key=lambda x: random.uniform(0, 1))
+    # Sort by position in doc
+    sentence_data = sorted(
+        sentence_data, key=lambda x: int(x['id'].split('_')[-1]))
 
     with open('app/src/assets/sentence_data.json', 'w') as f:
         f.write(json.dumps(sentence_data))

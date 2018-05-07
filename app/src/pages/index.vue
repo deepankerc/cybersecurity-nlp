@@ -17,7 +17,7 @@
         @input="filterOnCountrySelect"
       />
     </div>
-    <q-modal v-model="modalOpen" :content-css="{minWidth: '80vw', minHeight: '80vh'}">
+    <q-modal v-model="modalOpen" :content-css="{minWidth: '60vw', minHeight: '80vh'}">
       <q-modal-layout>
         <q-toolbar slot="header">
           <q-toolbar-title v-if="modalElem !== null">
