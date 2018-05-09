@@ -9,7 +9,12 @@ from cybersecurity_nlp.data.extract_text import convert_pdf_to_text
 from cybersecurity_nlp import logger
 
 class DocumentAccessor(object):
-    """Class for accessing raw documents"""
+    """Class for accessing raw documents
+
+    This class parses the `cybersecurity_nlp/data/document_key.csv` file and
+    looks in `cybersecurity_nlp/data/raw` for the raw pdfs to transform. This
+    assumes that `download_documents.sh` has been run first.
+    """
     def __init__(self):
         self._set_paths()
         self._parse_file()
@@ -34,6 +39,20 @@ class DocumentAccessor(object):
         self.rows = rows
 
     def documents(self, from_file_only=False):
+        """Get all documents in dict form
+
+        Params
+        ------
+        from_file_only: bool
+            If True, get documents from saved txt files only. Otherwise, this
+            will run the text extraction on all pdfs that haven't already been
+            converted to txt.
+
+        Returns
+        -------
+        list
+            List of dicts representing the documents.
+        """
         docs = []
         for i, row in enumerate(self.rows):
             # No language support, so skip non-english documents

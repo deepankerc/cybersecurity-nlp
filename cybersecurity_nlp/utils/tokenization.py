@@ -3,9 +3,8 @@ import re
 from nltk.tokenize.punkt import PunktSentenceTokenizer, PunktParameters
 
 class SentenceTokenizer(PunktSentenceTokenizer):
-    """
-    Sentence tokenizer extends the punkt tokenizer so that it can be customized
-    """    
+    """A custom sentence tokenizer that extends the punkt tokenizer so that it
+    can be customized to this project"""
     def __init__(self):
         punkt_param = PunktParameters()
         punkt_param.abbrev_types = set(['e.g', 'ie', 'i.e', 'eg'])

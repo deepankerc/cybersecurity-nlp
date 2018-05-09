@@ -1,9 +1,8 @@
 import re
 
 def clean_text(text):
-    """
-    Normalizes unicode characters and makes other safe cleaning improvements
-    """
+    """Normalizes unicode characters and makes other safe cleaning
+    improvements"""
 
     # spacing
     text = re.sub("\xa0", " ", text)
@@ -26,9 +25,7 @@ def clean_text(text):
 
 
 def clean_sentence(text):
-    """
-    Fixes spacing within a sentence
-    """
+    """Fixes spacing within a sentence"""
 
     # strip leading/trailing whitespace
     text = text.strip()
@@ -43,9 +40,7 @@ def clean_sentence(text):
 
 
 def is_bad_sentence(text):
-    """
-    Decides if a sentence is bad (headers, too short, incomplete, etc)
-    """
+    """Decides if a sentence is bad (headers, too short, incomplete, etc)"""
     if len(text) < 20 or len(text) > 350:
         return True
 

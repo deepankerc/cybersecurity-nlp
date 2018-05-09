@@ -34,6 +34,19 @@ class Document(object):
         return self._year
 
     def sentences(self, remove_bad=True):
+        """Retrieve a list of sentences in the document
+
+        Params
+        ------
+        remove_bad: bool
+            If True, remove "bad" sentences (sentences that probably aren't
+            meaningful and readable sentences).
+
+        Returns
+        -------
+        list
+            List of sentences of type Sentence in the document.
+        """
         sentences = []
         raw_sentences = (self.corpus().sentence_tokenizer()
                             .tokenize(self.text()))
