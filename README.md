@@ -28,7 +28,7 @@ This project is designed to be modular and extensible. It is structured as follo
 
 This project requires Python 3+. For quick and easy setup, make sure you have Python 3+ and use a `virtualenv`. Setup will look something like this:
 ```
-python3 -m virtualenv cybersecurity
+virtualenv --python=python3 cybersecurity
 source cybersecurity/bin/activate
 # cd back to the project root if you're not there already
 pip install -r cybersecurity_nlp/requirements.txt
