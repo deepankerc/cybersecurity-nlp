@@ -1,0 +1,33 @@
+name: cybersecurity-nlp
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - beautifulsoup4
+  - future
+  - ipywidgets>=7.0
+  - jupyter
+  - lxml
+  - matplotlib
+  - nltk
+  - numba
+  - numpy>=1.11
+  - pytorch>=0.4
+  - pandas
+  - psycopg2
+  - py4j
+  - python==3.6.3
+  - requests
+  - runipy
+  - scipy
+  - six
+  - spacy<2
+  - sqlalchemy>=1.0.14
+  - tika
+  - pip:
+    - git+https://github.com/HazyResearch/numbskull@ced435e98788e4c180e877fe83fd3f4cef76bed8
+    - git+https://github.com/HazyResearch/snorkel@v0.7.0-beta
+    - git+https://github.com/HazyResearch/treedlib@15840e2ff8e51763d7d4fb737ca7a04f66cbc3cd
+    - pdfminer.six
+    - timeout-decorator
+    - tqdm
