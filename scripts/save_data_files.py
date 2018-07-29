@@ -2,13 +2,14 @@
 import json
 import os
 import sys
+from collections import Counter
 
-sys.path.append(os.getcwd()) # probably better to just pip install
 from cybersecurity_nlp.pipelines.corpus import Corpus
 
 def save_data_files():
     sentence_data = []
     doc_data = []
+    phrases = Counter()
     corpus = Corpus()
     for doc in corpus.documents():
         doc_data.append({
@@ -26,6 +27,8 @@ def save_data_files():
                 'indent': sent.requires_indentation(),
                 'categories': sent.categories()
             })
+        for term, _ in doc.key_terms():
+            phrases[term] += 1
 
     # Sort by position in doc
     sentence_data = sorted(
@@ -35,6 +38,9 @@ def save_data_files():
         f.write(json.dumps(sentence_data))
     with open('app/src/assets/doc_data.json', 'w') as f:
         f.write(json.dumps(doc_data))
+    with open('app/src/assets/phrases.json', 'w') as f:
+        f.write(json.dumps([phrase for phrase, count in phrases.most_common()
+                            if count > 1]))
 
 if __name__ == '__main__':
     save_data_files()

@@ -1,3 +1,4 @@
+from functools import partial
 from textacy import Doc
 from textacy.keyterms import sgrank
 
@@ -28,8 +29,10 @@ class Document(object):
     def id(self):
         return str(self._id)
 
-    def key_terms(self):
-        return sgrank(self.doc(), ngrams=(1, 2, 3), window_width=100)
+    def key_terms(self, **kwargs):
+        key_terms = partial(
+            sgrank, ngrams=(1, 2, 3, 4), window_width=100, n_keyterms=20)
+        return key_terms(self.doc(), **kwargs)
 
     def raw(self):
         return self._raw
