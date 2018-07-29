@@ -48,6 +48,14 @@
         <q-card-main>
           {{ elem.text }} <q-icon name="launch" @click.native="openModal(elem)" />
         </q-card-main>
+        <q-card-separator v-if="elem.categories.length > 0"/>
+        <q-list>
+          <q-item v-for="(category, index) in elem.categories">
+            <q-item-main>
+              <q-item-tile label>{{ category }}</q-item-tile>
+            </q-item-main>
+          </q-item>
+        </q-list>
       </q-card>
       <q-spinner-dots slot="message" :size="40"></q-spinner-dots>
     </q-infinite-scroll>
