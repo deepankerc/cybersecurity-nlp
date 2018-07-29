@@ -29,5 +29,7 @@ dependencies:
     - git+https://github.com/HazyResearch/snorkel@v0.7.0-beta
     - git+https://github.com/HazyResearch/treedlib@15840e2ff8e51763d7d4fb737ca7a04f66cbc3cd
     - pdfminer.six
+    - spacy
+    - textacy
     - timeout-decorator
     - tqdm

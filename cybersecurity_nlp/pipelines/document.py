@@ -1,3 +1,6 @@
+from textacy import Doc
+from textacy.keyterms import sgrank
+
 from cybersecurity_nlp.pipelines.sentence import Sentence
 from cybersecurity_nlp.utils.text_cleaning import clean_text
 
@@ -17,8 +20,16 @@ class Document(object):
     def country(self):
         return self._country
 
+    def doc(self):
+        # NOTE: Should cache this somehow if we want to use for more than one
+        # thing.
+        return Doc(self.text(), lang="en")
+
     def id(self):
         return str(self._id)
+
+    def key_terms(self):
+        return sgrank(self.doc(), ngrams=(1, 2, 3), window_width=100)
 
     def raw(self):
         return self._raw
