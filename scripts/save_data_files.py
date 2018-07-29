@@ -23,7 +23,8 @@ def save_data_files():
                 'id': sent.id(),
                 'paragraph_id': sent.paragraph_id(),
                 'doc_id': doc.id(),
-                'indent': sent.requires_indentation()
+                'indent': sent.requires_indentation(),
+                'categories': sent.categories()
             })
 
     # Sort by position in doc

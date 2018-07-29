@@ -1,5 +1,7 @@
 import re
 
+from cybersecurity_nlp.classification.category_classification import (
+    get_category_classifier)
 from cybersecurity_nlp.utils.text_cleaning import (clean_sentence,
     is_bad_sentence)
 
@@ -39,6 +41,9 @@ class Sentence(object):
 
     def year(self):
         return self._year
+
+    def categories(self):
+        return get_category_classifier().predict(self.text())
 
     def requires_indentation(self):
         """Indicates whether a new line is necessary when displaying the
