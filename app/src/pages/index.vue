@@ -14,7 +14,15 @@
         v-model="selectedCountries"
         :options="countryOptions"
         :filter=true
-        @input="filterOnCountrySelect"
+        @input="filterOnOptionSelect"
+      />
+      <q-select
+        multiple
+        float-label="Select Categories"
+        v-model="selectedCategories"
+        :options="categoryOptions"
+        :filter=true
+        @input="filterOnOptionSelect"
       />
     </div>
     <q-modal v-model="modalOpen" :content-css="{minWidth: '60vw', minHeight: '80vh'}">
@@ -50,9 +58,9 @@
         </q-card-main>
         <q-card-separator v-if="elem.categories.length > 0"/>
         <q-list>
-          <q-item v-for="(category, index) in elem.categories">
+          <q-item v-for="(category, index) in elem.categories" :key="index">
             <q-item-main>
-              <q-item-tile label>{{ category }}</q-item-tile>
+              {{ category }}
             </q-item-main>
           </q-item>
         </q-list>
@@ -92,6 +100,21 @@ var idToYear = DocData.reduce(function(map, obj) {
   return map;
 }, {});
 
+// Categories
+var categoryOptions = [
+  "Legal Measures",
+  "Technical Measures",
+  "Organization Measures",
+  "Capacity Building",
+  "Cooperation",
+  "Child Online Protection"
+].map(function(x) {
+  return {
+    label: x,
+    value: x
+  }
+});
+
 // Get unique countries
 function uniqueCountries(d) {
   var uniq = d.reduce(function(map, obj) {
@@ -108,7 +131,7 @@ function uniqueCountries(d) {
   });
 }
 
-// Top phrases for Autocomplete
+// Top phrases
 function parsePhrases() {
   return phrases.map(phrase => {
     return {
@@ -133,7 +156,9 @@ export default {
       modalElem: null,
       modalOpen: false,
       countryOptions: uniqueCountries(DocData),
+      categoryOptions: categoryOptions,
       selectedCountries: [],
+      selectedCategories: []
     }
   },
   methods: {
@@ -153,11 +178,15 @@ export default {
       }
       if (this.selectedCountries.length > 0) {
         this.sentenceData = this.sentenceData.filter(
-        sentence => this.selectedCountries.includes(this.idToCountry[sentence.doc_id]));
+          sentence => this.selectedCountries.includes(this.idToCountry[sentence.doc_id]));
+      }
+      if (this.selectedCategories.length > 0) {
+        this.sentenceData = this.sentenceData.filter(
+          sentence => this.selectedCategories.filter(x => sentence.categories.indexOf(x) !== -1).length > 0);
       }
       this.sentences = this.sentenceData.slice(0, pageSize);
     },
-    filterOnCountrySelect(newVal) {
+    filterOnOptionSelect(newVal) {
       this.filterOnSearch(this.searchTerm == null ? '' : this.searchTerm);
     },
     openModal(elem) {
